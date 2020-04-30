@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('Copy artifact') {
       steps {
-        copyArtifacts filter: 'example1', fingerprintArtifacts: true, projectName: 'example1', selector: lastSuccessful()
+        copyArtifacts filter: 'myGo2HWmoms', fingerprintArtifacts: true, projectName: 'myGo2HWmoms', selector: lastSuccessful()
       }
     }
     stage('Deliver') {
