@@ -9,12 +9,12 @@ tasks:
   - name: copy artifact
     copy:
       src: example1
-      dest: /home/vagrant/example1
+      dest: /home/myGoHomework
       mode: '0777'
 
   - name: enable and start service
     become: yes
     systemd:
-      name: example
+      name: myGoHomework
       enabled: yes
       state: restarted
