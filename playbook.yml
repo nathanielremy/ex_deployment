@@ -2,8 +2,8 @@
 tasks:
   - name: copy artifact
     copy:
-      src: /var/lib/jenkins/workspace/ex_deployment/multygo_master
-      dest: /home/vagrant/multygo_master
+      src: /var/lib/jenkins/workspace/ex_deployment/myGo2HWmoms_master
+      dest: /home/vagrant/myGo2HWmoms_masterk
       mode: 0777
 
   - name: create simple service template
