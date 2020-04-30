@@ -20,7 +20,7 @@ pipeline {
             credentialsId: '24ac3217-d46b-4ff7-8a31-88feff14941b',
             disableHostKeyChecking: true,
             installation: 'ansible',
-            inventory: '/var/lib/jenkins/workspace/ex_eployment/host.ini',
+            inventory: '/var/lib/jenkins/workspace/ex_eployment/hosts.ini',
             playbook: '/var/lib/jenkins/workspace/ex_deployment/playbook.yml'
         
       }
