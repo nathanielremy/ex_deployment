@@ -19,9 +19,9 @@ pipeline {
           ansiblePlaybook colorized: true,
             credentialsId: '24ac3217-d46b-4ff7-8a31-88feff14941b',
             disableHostKeyChecking: true,
-            installation: 'asinble',
-            inventory: '/var/lib/jenkins/workspace/example1-deployment/host.ini',
-            playbook: '/var/lib/jenkins/workspace/example1-deployment/playbook.yml'
+            installation: 'ansible',
+            inventory: '/var/lib/jenkins/workspace/ex_eployment/host.ini',
+            playbook: '/var/lib/jenkins/workspace/ex_deployment/playbook.yml'
         
       }
     }
