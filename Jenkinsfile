@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('Copy artifact') {
       steps {
-        copyArtifacts filter: 'go my pipe is awesome', fingerprintArtifacts: true, projectName: 'go my pipe is awesome', selector: lastSuccessful()
+        copyArtifacts filter: 'myHugePipe_Ruby', fingerprintArtifacts: true, projectName: 'myHugePipe_Ruby', selector: lastSuccessful()
       }
     }
     stage('Deliver') {
