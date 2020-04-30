@@ -1,21 +1,21 @@
 - hosts: all
-tasks:
-  - name: copy artifact
-    copy:
-      src: /var/lib/jenkins/workspace/ex_deployment/myGo2HWmoms_master
-      dest: /home/vagrant/myGo2HWmoms_masterk
-      mode: 0777
+  tasks:
+    - name: copy artifact
+      copy:
+        src: /var/lib/jenkins/workspace/ex_deployment/myGo2HWmoms_master
+        dest: /home/vagrant/myGo2HWmoms_masterk
+        mode: 0777
 
-  - name: create simple service template
-    become: true
-    template:
-      src: simple.service.j2
-      dest: /etc/systemd/system/simple.service
+    - name: create simple service template
+      become: true
+      template:
+        src: simple.service.j2
+        dest: /etc/systemd/system/simple.service
 
-  - name: start systemd service
-    become: true
-    systemd:
-      name: simple
-      daemon_reload: yes
-      enabled: true
-      state: restarted
+    - name: start systemd service
+      become: true
+      systemd:
+        name: simple
+        daemon_reload: yes
+        enabled: true
+        state: restarted
