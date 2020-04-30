@@ -7,16 +7,9 @@
 copyArtifacts filter: 'myGo2HWmoms_master', fingerprintArtifacts: true, projectName: 'myGo2HWmoms/master', selector: lastSuccessful()
       }
     }
-
-
-stage('Run ansible') {
+stage('Deliver') {
       steps {
-          ansiblePlaybook colorized: true,
-            credentialsId: '24ac3217-d46b-4ff7-8a31-88feff14941b',
-            disableHostKeyChecking: true,
-            installation: 'asinble',
-            inventory: '/var/lib/jenkins/workspace/ex_deployment/host.ini',
-            playbook: '/var/lib/jenkins/workspace/ex_deployment/playbook.yml'
-      }
+	sh 'scp -o StrictHostKeyChecking=no myGo2HWmoms_master vagrant@10.10.50.2'
+        /*ansiblePlaybook credentialsId: 'toobox-vagrant-key', inventory: 'hosts.ini', playbook: 'playbook.yml'*/
     }
 }
