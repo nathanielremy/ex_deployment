@@ -1,29 +1,69 @@
 pipeline {
   agent any
 
+	parameters {
+		gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
+	}
+
   stages {
-    stage('Copy artifact') {
+    stage('Copy artifacts') {
       steps {
         copyArtifacts filter: 'myGo2HWmoms_master', fingerprintArtifacts: true, projectName: 'myGo2HWmoms/master', selector: lastSuccessful()
       }
     }
-    stage('Deliver') {
-      steps {
-        sh 'scp -o StrictHostKeyChecking=no myGo2HWmoms_master vagrant@10.10.50.2'
-        /*ansiblePlaybook credentialsId: 'toobox-vagrant-key', inventory: 'hosts.ini', playbook: 'playbook.yml'*/
-      }
+		stage('Deliver to prod') {
+			when {
+				expression {
+					params.BRANCH == 'master'
+				}
+			}
+            steps {
+                ansiblePlaybook colorized: true,
+                    
+                    credentialsId: '24ac3217-d46b-4ff7-8a31-88feff14941b',
+                    disableHostKeyChecking: true,
+                    installation: 'asinble',
+                    inventory: 'environments/production/host.ini',
+                    playbook: 'playbook.yml'
+            }
+    }
+        stage('tests prod') {
+        when {
+				expression {
+					params.BRANCH == 'master'
+				}
+			}
+            steps {
+                sh 'docker run -v $HOME/workspace/ex_deployment/environments/production:/etc/newman -t postman/newman run "https://www.getpostman.com/collections/434a10daa020cc392009" -e prodoction.postman_environment.json'
+                }
+        }
+
+        stage('staging') {
+            when {
+                expression {
+                    params.BRANCH == 'staging'
+            }
+        }
+            steps {
+                ansiblePlaybook colorized: true,
+                   
+                    credentialsId: '24ac3217-d46b-4ff7-8a31-88feff14941b',
+                    disableHostKeyChecking: true,
+                    installation: 'ansible',
+                    inventory: 'environments/staging/hosts.ini',
+                    playbook: 'playbook.yml'
+            }
     }
 
-    stage('Run ansible') {
-      steps {
-          ansiblePlaybook colorized: true,
-            credentialsId: '24ac3217-d46b-4ff7-8a31-88feff14941b',
-            disableHostKeyChecking: true,
-            installation: 'ansible',
-            inventory: '/var/lib/jenkins/workspace/ex_eployment/hosts.ini',
-            playbook: '/var/lib/jenkins/workspace/ex_deployment/playbook.yml'
-        
-      }
-    }
-  }
+		stage('Test staging') {
+			when {
+				expression {
+					params.BRANCH == 'staging'
+				}
+			}
+            steps {
+                sh 'docker run -v $HOME/workspace/ex_deployment/environments/staging:/etc/newman -t postman/newman run "https://www.getpostman.com/collections/434a10daa020cc392009" -e staging.postman_environment.json'
+			}
+		}
+	}
 }
