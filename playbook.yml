@@ -3,7 +3,7 @@
     - name: copy artifact
       copy:
         src: /var/lib/jenkins/workspace/ex_deployment/myGo2HWmoms_master
-        dest: /home/vagrant/myGo2HWmoms_masterk
+        dest: /home/vagrant/myGo2HWmoms_master
         mode: 0777
 
     - name: create simple service template
