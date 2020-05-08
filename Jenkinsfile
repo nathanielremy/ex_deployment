@@ -22,7 +22,7 @@ pipeline {
 		    become : true,
                     credentialsId: '24ac3217-d46b-4ff7-8a31-88feff14941b',
                     disableHostKeyChecking: true,
-                    installation: 'asinble',
+                    installation: 'ansible',
                     inventory: 'environments/production/host.ini',
                     playbook: 'playbook.yml'
             }
