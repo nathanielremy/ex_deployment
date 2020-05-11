@@ -11,6 +11,16 @@ pipeline {
         copyArtifacts filter: 'myGo2HWmoms_master', fingerprintArtifacts: true, projectName: 'myGo2HWmoms/master', selector: lastSuccessful()
       }
     }
+	  stage('tests prod') {
+        when {
+				expression {
+					params.BRANCH == 'master'
+				}
+			}
+            steps {
+                sh 'docker run -v $HOME/workspace/ex_deployment/environments/production:/etc/newman -t postman/newman run "https://www.getpostman.com/collections/434a10daa020cc392009" -e production.postman_environment.json'
+                }
+        }
 		stage('Deliver to prod') {
 			when {
 				expression {
@@ -26,17 +36,6 @@ pipeline {
                     playbook: 'playbook.yml'
             }
     }
-        stage('tests prod') {
-        when {
-				expression {
-					params.BRANCH == 'master'
-				}
-			}
-            steps {
-                sh 'docker run -v $HOME/workspace/ex_deployment/environments/production:/etc/newman -t postman/newman run "https://www.getpostman.com/collections/434a10daa020cc392009" -e production.postman_environment.json'
-                }
-        }
-
         stage('staging') {
             when {
                 expression {
