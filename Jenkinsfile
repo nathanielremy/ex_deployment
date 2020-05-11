@@ -39,7 +39,7 @@ pipeline {
         stage('staging') {
             when {
                 expression {
-                    params.BRANCH == 'staging'
+                    params.BRANCH == 'seo'
             }
         }
             steps {
@@ -55,7 +55,7 @@ pipeline {
 		stage('Test staging') {
 			when {
 				expression {
-					params.BRANCH == 'staging'
+					params.BRANCH == 'seo'
 				}
 			}
             steps {
