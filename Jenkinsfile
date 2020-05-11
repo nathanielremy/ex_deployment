@@ -19,7 +19,7 @@ pipeline {
 			}
             steps {
                 ansiblePlaybook colorized: true,
-                    credentialsId: '24ac3217-d46b-4ff7-8a31-88feff14941b',
+                    credentialsId: 'b8d91b57-41ae-4cc3-9fb3-e540cb083e9a',
                     disableHostKeyChecking: true,
                     installation: 'asinble',
                     inventory: 'environments/production/host.ini',
@@ -45,7 +45,7 @@ pipeline {
         }
             steps {
                 ansiblePlaybook colorized: true,
-                    credentialsId: '24ac3217-d46b-4ff7-8a31-88feff14941b',
+                    credentialsId: 'b8d91b57-41ae-4cc3-9fb3-e540cb083e9a',
                     disableHostKeyChecking: true,
                     installation: 'asinble',
                     inventory: 'environments/staging/hosts.ini',
